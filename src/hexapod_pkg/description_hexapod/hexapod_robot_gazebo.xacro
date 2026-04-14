@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="hexapod_robot_gazebo">
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" 
+              name="ign_ros2_control::IgnitionROS2ControlPlugin">
+        <parameters>$(find hexapod_pkg)/config/my_hexapod_controllers.yaml</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
+</robot>

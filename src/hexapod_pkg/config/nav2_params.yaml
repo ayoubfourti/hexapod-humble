@@ -1,0 +1,92 @@
+bt_navigator:
+  ros__parameters:
+    use_sim_time: True
+    global_frame: map
+    robot_base_frame: base_link
+    odom_topic: /odom
+
+controller_server:
+  ros__parameters:
+    use_sim_time: True
+    controller_frequency: 20.0
+    FollowPath:
+      plugin: nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController
+      desired_linear_vel: 0.2
+      lookahead_dist: 0.4
+      min_lookahead_dist: 0.3
+      max_lookahead_dist: 0.9
+
+planner_server:
+  ros__parameters:
+    use_sim_time: True
+    planner_plugins: ["GridBased"]
+    GridBased:
+      plugin: nav2_navfn_planner/NavfnPlanner
+      tolerance: 0.5
+      use_astar: false
+
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      use_sim_time: True
+      global_frame: odom
+      robot_base_frame: base_link
+      rolling_window: True
+      width: 3
+      height: 3
+      resolution: 0.05
+      plugins: ["voxel_layer", "inflation_layer"]
+      inflation_layer:
+        plugin: nav2_costmap_2d::InflationLayer
+        inflation_radius: 0.3
+      voxel_layer:
+        plugin: nav2_costmap_2d::VoxelLayer
+        observation_sources: scan
+        scan:
+          topic: /lidar_scan
+          max_obstacle_height: 2.0
+          clearing: True
+          marking: True
+          data_type: LaserScan
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      use_sim_time: True
+      global_frame: map
+      robot_base_frame: base_link
+      plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+      static_layer:
+        plugin: nav2_costmap_2d::StaticLayer
+        map_subscribe_transient_local: True
+      obstacle_layer:
+        plugin: nav2_costmap_2d::ObstacleLayer
+        observation_sources: scan
+        scan:
+          topic: /lidar_scan
+          max_obstacle_height: 2.0
+          clearing: True
+          marking: True
+          data_type: LaserScan
+      inflation_layer:
+        plugin: nav2_costmap_2d::InflationLayer
+        inflation_radius: 0.3
+
+map_server:
+  ros__parameters:
+    use_sim_time: True
+
+amcl:
+  ros__parameters:
+    use_sim_time: True
+
+lifecycle_manager:
+  ros__parameters:
+    use_sim_time: True
+    autostart: True
+    node_names:
+      - map_server
+      - amcl
+      - controller_server
+      - planner_server
+      - bt_navigator
