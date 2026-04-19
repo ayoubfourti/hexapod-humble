@@ -153,12 +153,12 @@ class RotateCCW(BaseGait):
         self.tripod_A = ["lf", "rm", "lr"]
         self.tripod_B = ["rf", "lm", "rr"]
 
-        self.spread = {"A": -0.35, "B": +0.35}
-        self.push = +0.60
+        self.spread = {"A": -0.25, "B": +0.25}
+        self.push = +0.40
 
         self.step_height = 1.15
 
-        self.T = 0.45   # smaller = faster
+        self.T = 0.6   # smaller = faster
         self.start_time = node.get_clock().now()
 
     def apply_pose(self, leg, c1, tibia):
@@ -210,8 +210,8 @@ class RotateCCW(BaseGait):
 class RotateCW(RotateCCW):
     def __init__(self, node):
         super().__init__(node)
-        self.push = -0.60
-        self.spread = {"A": +0.35, "B": -0.35}
+        self.push = -0.40
+        self.spread = {"A": +0.25, "B": -0.25}
 
 # ============================================================
 #     REAL SIDE GAIT (SHEAR / CRAB)
