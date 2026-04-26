@@ -66,8 +66,10 @@ install(
 install(PROGRAMS
   # Comunication DDS Nodes
   hexapod_pkg/dds_nodes/dds_cmd_talker.py
+  hexapod_pkg/dds_nodes/websocket_bridge.py
   hexapod_pkg/dds_nodes/dds_sensors_fast_listener.py
   hexapod_pkg/dds_nodes/dds_sensors_reliable_listener.py
+
 
   # Gazebo Nodes
   hexapod_pkg/gazebo_nodes/gz_ir_emulator.py
@@ -98,6 +100,7 @@ install(PROGRAMS
   # TeleOP Nodes
   hexapod_pkg/teleop_nodes/teleop_hexapod_sim.py
   hexapod_pkg/teleop_nodes/teleop_hexapod_real.py
+  hexapod_pkg/teleop_nodes/serial_bridge.py
 
   # Navigation Nodes
   hexapod_pkg/navigation_nodes/target_navigation_with_obstacle_avoidance.py
@@ -120,6 +123,7 @@ install(PROGRAMS
   hexapod_pkg/read_sensors_nodes/read_BerryImu_node.py
   hexapod_pkg/read_sensors_nodes/read_ir_node.py
   hexapod_pkg/read_sensors_nodes/read_ultrasonic_node.py
+  hexapod_pkg/read_sensors_nodes/jetson_monitor.py
 
   # Balance Controller
   hexapod_pkg/auto_balance_nodes/balance_controller.py

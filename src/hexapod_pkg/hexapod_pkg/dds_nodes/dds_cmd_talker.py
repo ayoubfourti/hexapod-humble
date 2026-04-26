@@ -31,7 +31,6 @@ class CommandTalker(Node):
         self.declare_parameter("linear_speed", 127) # linear speed
         self.declare_parameter("angular_speed", 127) # angular velocity
         self.declare_parameter("walk_yaw_trim", -7) # compensation of lateral and linear movement
-        #self.declare_parameter("roll_pitch_ang", 10) # angular velocity
 
         self.declare_parameter("qos_depth", 10)
 
@@ -42,7 +41,6 @@ class CommandTalker(Node):
         self.v_lin = int(self.get_parameter("linear_speed").value)
         self.v_ang = int(self.get_parameter("angular_speed").value)
         self.walk_yaw_trim = int(self.get_parameter("walk_yaw_trim").value)
-        #self.roll_pitch_ang = int(self.get_parameter("roll_pitch_ang").value)
 
         qos = QoSProfile(
             reliability=ReliabilityPolicy.RELIABLE,
@@ -92,8 +90,12 @@ class CommandTalker(Node):
         cmd = msg.data.strip()
         serial_cmd = None
 
+        # ---- WALK direct depuis Flutter (ex: "WALK 80 0 0") ----
+        if cmd.startswith("WALK "):
+            serial_cmd = cmd
+
         # ---- MOTION ----
-        if cmd == "forward":
+        elif cmd == "forward":
             serial_cmd = f"WALK {self.v_lin} 0 {self.walk_yaw_trim}"
 
         elif cmd == "backward":
@@ -107,12 +109,9 @@ class CommandTalker(Node):
 
         elif cmd == "turn_left":
             serial_cmd = f"WALK 0 0 {(self.v_ang)}"
-            #serial_cmd = f"ROT 0 {self.v_ang} 0 0"
 
         elif cmd == "turn_right":
             serial_cmd = f"WALK 0 0 {-(self.v_ang)}"
-            #serial_cmd = f"ROT 0 {-self.v_ang} 0 0"
-
 
         # ---- STOP ----
         elif cmd == "stop":
@@ -120,13 +119,13 @@ class CommandTalker(Node):
 
         # ---- MODES ----
         elif cmd == "mode_1":
-            serial_cmd = f"MODE 1"
-        
+            serial_cmd = "MODE 1"
+
         elif cmd == "mode_2":
-            serial_cmd = f"MODE 2"
+            serial_cmd = "MODE 2"
 
         elif cmd == "mode_3":
-            serial_cmd = f"MODE 3"
+            serial_cmd = "MODE 3"
 
         # ---- UNKNOW ----
         else:
