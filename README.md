@@ -2,7 +2,7 @@
 
 > Autonomous six-legged robot designed for search and rescue operations, built with ROS2, SLAM, and AI-powered human detection.
 
-![Hexapod Robot](photo<img width="1536" height="2048" alt="a31f4410-74f4-4812-8450-9fca33a76c88" src="https://github.com/user-attachments/assets/b69e3c7f-00a5-44d7-8872-b1bb5519ce4f" />
+<img width="1536" height="2048" alt="a31f4410-74f4-4812-8450-9fca33a76c88" src="https://github.com/user-attachments/assets/b69e3c7f-00a5-44d7-8872-b1bb5519ce4f" />
 
 .jpg)
 
